@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uploading cars</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/main/upload_car.css' %}">
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data" class="car-form">
+        {% csrf_token %}
+        <div id="car_name" name="car_name">
+            <h2>Give the car's full name with brand</h2>
+            {% for message in messages %}
+            <h5>{{ message }}</h5>
+            {% endfor %}
+            <input type="text" name="car_name" id="car_name" placeholder="Enter Car's name">
+        </div>
+        <div id="car_image" name="car_image">
+            <h2>Upload Car image</h2>
+            <input type="file" name="car_image" id="car_image" placeholder="Upload Car's image">
+        </div>
+        <div id="car_price" name="car_price">
+            <h2>Give the car's price</h2>
+            <input type="number" name="car_price" id="car_price" placeholder="Enter Car's price">
+        </div>
+        <button type="submit" name="upload" value="upload">Submit</button>
+    </form>
+
+    <form action="/search" method="post" class="search-form">
+        {% csrf_token %}
+        <div id="search" name="search">
+            <h2>Search for a car by name</h2>
+            <input type="text" name="search" id="search" placeholder="Search for a car by name">
+        </div>
+        <button type="submit" name="action" value="search">Search</button>
+    </form>
+</body>
+</html>

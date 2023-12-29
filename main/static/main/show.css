@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(95, 58, 129);
+}
+.image{
+        width: 20%;
+        height: 200px;
+}
+ul {
+    margin:0;
+    padding:0;
+    text-align: center;
+    list-style:none;                
+}
+ul  li {
+    padding: 2px 5px;               
+}
