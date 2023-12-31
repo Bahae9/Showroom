@@ -7,4 +7,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('remove', views.remove, name='remove'),
     path('api/cars/', views.car_list, name='car_list'),
+    path('signin', views.signin, name="signin"),
+    path('logout', views.logout, name='logout'),
 ]

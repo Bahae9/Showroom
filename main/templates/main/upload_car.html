@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static '/main/upload_car.css' %}">
 </head>
 <body>
+    <a href="logout"><button class="logout-button" role="button">Logout</button></a>
     <form action="" method="post" enctype="multipart/form-data" class="car-form">
         {% csrf_token %}
         <div id="car_name" name="car_name">
@@ -31,7 +32,7 @@
     <form action="/search" method="post" class="search-form">
         {% csrf_token %}
         <div id="search" name="search">
-            <h2>Search for a car by name</h2>
+            <h3>Search for a car by name</h3>
             <input type="text" name="search" id="search" placeholder="Search for a car by name">
         </div>
         <button type="submit" name="action" value="search">Search</button>

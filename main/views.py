@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Car
-from django.contrib import messages
+from django.contrib import messages, auth
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import CarSerializer
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url='signin')
 def upload(request):
     if request.method == 'POST':
         car_name = str(request.POST['car_name'])
@@ -22,7 +26,7 @@ def upload(request):
             new_car.save()
     return render(request, 'main/upload_car.html')
 
-
+@login_required(login_url='signin')
 def search(request):
     try:
         search_result = request.POST['search']
@@ -37,6 +41,7 @@ def search(request):
     except:
         return redirect('/')
 
+@login_required(login_url='signin')
 def remove(request):
     try:
         remove = request.POST.get('remove')
@@ -46,7 +51,27 @@ def remove(request):
         return render(request, 'main/show.html', {'cars' : Car.objects.all()})
     except Car.DoesNotExist:
         return redirect('/')
-    
+
+def signin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        print('username: ' + username + '    password: ' + password)
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, 'Wrong')
+            return redirect('signin')
+    else:
+        return render(request, 'main/signin.html')
+
+@login_required(login_url='signin')
+def logout(request):
+    auth.logout(request)
+    return redirect('signin')
+
 @api_view(['GET'])
 def car_list(request):
     cars = Car.objects.all()
